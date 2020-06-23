@@ -1,0 +1,49 @@
+
+
+plugins {
+    id 'java-gradle-plugin' 
+    id 'com.gradle.plugin-publish' version '0.12.0' 
+}
+
+
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+ 
+group = 'ca.retrylife.gradle.testui'
+version = '1.0.0'
+ 
+gradlePlugin {
+  plugins {
+    testUIPlugin {
+      id = project.group
+      displayName = "TestUI"
+      description = "A small gradle plugin for nicer unit test UI"
+      implementationClass = 'ca.retrylife.gradle.testui.TestUI'
+    }
+  }
+}
+ 
+dependencies {
+  compile localGroovy()
+  compile gradleApi()
+}
+ 
+publishing {
+  publications {
+    pluginPublication (MavenPublication) {
+      from            components.java
+      groupId         project.group
+      artifactId      "TestUI"
+      version         project.version
+    }
+  }
+}
+
+
+
+pluginBundle {
+    website = 'https://github.com/Ewpratten/gradle-test-ui' 
+    vcsUrl = 'https://github.com/Ewpratten/gradle-test-ui' 
+    tags = ['unittest', 'ui', "testui"] 
+}
+
